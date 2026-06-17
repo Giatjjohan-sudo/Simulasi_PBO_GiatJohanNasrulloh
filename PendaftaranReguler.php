@@ -13,7 +13,8 @@ class PendaftaranReguler extends Pendaftaran {
     }
 
     public static function getDaftarReguler($db) {
-        $query = "SELECT id_pendaftaran, nama_calon, asal_sekolah, nilai_ujian, biaya_pendaftaran_dasar, pilihan_prodi, lokasi_campur = lokasi_kampus 
+        // PERBAIKAN DI SINI: Mengubah 'lokasi_campur = lokasi_kampus' menjadi 'lokasi_kampus' murni
+        $query = "SELECT id_pendaftaran, nama_calon, asal_sekolah, nilai_ujian, biaya_pendaftaran_dasar, pilihan_prodi, lokasi_kampus 
                   FROM tabel_pendaftaran 
                   WHERE jalur_pendaftaran = 'Reguler'";
         
@@ -23,7 +24,6 @@ class PendaftaranReguler extends Pendaftaran {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Tahap 5: Overriding Logika Biaya Reguler (Murni)
     public function hitungTotalBiaya() {
         return $this->biaya_pendaftaran_dasar;
     }
