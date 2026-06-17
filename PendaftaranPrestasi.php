@@ -3,18 +3,15 @@
 require_once 'Pendaftaran.php';
 
 class PendaftaranPrestasi extends Pendaftaran {
-    // Properti tambahan spesifik
     private $jenisPrestasi;
     private $tingkatPrestasi;
 
-    // Constructor
     public function __construct($id_pendaftaran, $nama_calon, $asal_sekolah, $nilai_ujian, $biaya_pendaftaran_dasar, $jenisPrestasi = null, $tingkatPrestasi = null) {
         parent::__construct($id_pendaftaran, $nama_calon, $asal_sekolah, $nilai_ujian, $biaya_pendaftaran_dasar);
         $this->jenisPrestasi = $jenisPrestasi;
         $this->tingkatPrestasi = $tingkatPrestasi;
     }
 
-    // Metode Query Spesifik
     public static function getDaftarPrestasi($db) {
         $query = "SELECT id_pendaftaran, nama_calon, asal_sekolah, nilai_ujian, biaya_pendaftaran_dasar, jenis_prestasi, tingkat_prestasi 
                   FROM tabel_pendaftaran 
@@ -26,13 +23,13 @@ class PendaftaranPrestasi extends Pendaftaran {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Mengimplementasikan abstract method dari class induk
+    // Tahap 5: Overriding Logika Biaya Prestasi (Potongan 50rb)
     public function hitungTotalBiaya() {
-        return $this->biaya_pendaftaran_dasar;
+        return $this->biaya_pendaftaran_dasar - 50000;
     }
 
     public function tampilkanInfoJalur() {
-        echo "Jalur: Prestasi, Jenis: " . $this->jenisPrestasi . ", Tingkat: " . $this->tingkatPrestasi;
+        echo "Jalur: Prestasi | Jenis: " . $this->jenisPrestasi . " | Tingkat: " . $this->tingkatPrestasi;
     }
 }
 ?>

@@ -3,21 +3,17 @@
 require_once 'Pendaftaran.php';
 
 class PendaftaranReguler extends Pendaftaran {
-    // Properti tambahan spesifik
     private $pilihanProdi;
     private $lokasiKampus;
 
-    // Constructor untuk menginisialisasi properti induk dan properti anak
     public function __construct($id_pendaftaran, $nama_calon, $asal_sekolah, $nilai_ujian, $biaya_pendaftaran_dasar, $pilihanProdi = null, $lokasiKampus = null) {
-        // Memanggil constructor dari class induk (Pendaftaran)
         parent::__construct($id_pendaftaran, $nama_calon, $asal_sekolah, $nilai_ujian, $biaya_pendaftaran_dasar);
         $this->pilihanProdi = $pilihanProdi;
         $this->lokasiKampus = $lokasiKampus;
     }
 
-    // Metode Query Spesifik menggunakan PDO
     public static function getDaftarReguler($db) {
-        $query = "SELECT id_pendaftaran, nama_calon, asal_sekolah, nilai_ujian, biaya_pendaftaran_dasar, pilihan_prodi, lokasi_kampus 
+        $query = "SELECT id_pendaftaran, nama_calon, asal_sekolah, nilai_ujian, biaya_pendaftaran_dasar, pilihan_prodi, lokasi_campur = lokasi_kampus 
                   FROM tabel_pendaftaran 
                   WHERE jalur_pendaftaran = 'Reguler'";
         
@@ -27,14 +23,13 @@ class PendaftaranReguler extends Pendaftaran {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Mengimplementasikan abstract method dari class induk (dikosongkan dulu untuk Tahap 5)
+    // Tahap 5: Overriding Logika Biaya Reguler (Murni)
     public function hitungTotalBiaya() {
-        // Akan diimplementasikan lengkap di Tahap 5
         return $this->biaya_pendaftaran_dasar;
     }
 
     public function tampilkanInfoJalur() {
-        echo "Jalur: Reguler, Prodi: " . $this->pilihanProdi . ", Kampus: " . $this->lokasiKampus;
+        echo "Jalur: Reguler | Prodi: " . $this->pilihanProdi . " | Kampus: " . $this->lokasiKampus;
     }
 }
 ?>
